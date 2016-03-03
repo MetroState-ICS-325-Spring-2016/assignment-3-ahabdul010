@@ -11,14 +11,68 @@ SELECT COUNT(*) FROM `customers` WHERE `creditLimit` > 20000;
 97
 
 1. How many customers are located in Germany? (Should return only 1 field with the count.)
+#Answer:
+USE classicmodels;
+select count(customerNumber)
+from customers
+where country = "Germany";
+# count(customerNumber)
+13
+
 
 2. What is the contact first name and contact last name for every contact that has a first name that starts with D?
+#Answer:
+Use classicmodels;
+select contactFirstName, contactLastName
+from customers
+where contactFirstName LIKE "D%"
+# contactFirstName, contactLastName
+Diego , Freyre
+Dean, Cassidy
+Daniel, Da Silva
+Daniel , Tonini
+Dorothy, Young
+Dominique, Perrier
+Dan, Lewis
 
 3. What are the customer names for every company that Leslie Tompson is a sales rep for?
+#Answer:
+USE classicmodels;
+select customerName
+from customers
+where salesRepEmployeeNumber =  (
+	select employeeNumber from employees
+    where lastName = 'Thompson'
+    and firstName = 'Leslie');
+# customerName
+Signal Gift Stores
+Toys4GrownUps.com
+Boards & Toys Co.
+Collectable Mini Designs Co.
+Men 'R' US Retailers, Ltd.
+West Coast Collectables Co.
 
 4. What was the amount for the last payment that Boards & Toys Co. made? (Should return only 1 field with the amount.)
+#Answer:
+/*
+use classicmodels;
+SELECT amount as lastPaymentDate
+from payments
+where (amount,paymentDate) in (
+	select amount, max(paymentDate)
+    from payments
+    where customerNumber = '219'
+    order by paymentDate);*/
+# lastPaymentDate
+3452.75
 
 5. How many payments have been made that are more than 20000? (Should return 1 field with the count.)
+#Answer:
+/*SELECT COUNT(amount) as `payments > 20000`
+FROM `payments`
+WHERE `amount` > '20000'; */
+# payments > 20000
+195
 
 6. Write a PHP program that prints the following information to the terminal:
 The customer name, country, and sales rep name on one line per customer.
